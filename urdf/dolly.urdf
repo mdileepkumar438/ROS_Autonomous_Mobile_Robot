@@ -175,7 +175,7 @@
 </link>
 <joint name="front_arm_bar_joint" type="fixed">
   <axis xyz="0.0 1 0.0"/>
-  <parent link="base_link"/>
+  <parent link="base_footprint"/>
   <child link="front_arm_bar"/>
   <origin xyz="-0.4 0.0 -0.0" rpy="0.0 0.0 0.0"/>
 </joint>
@@ -203,7 +203,7 @@
 </link>
 <joint name="front_arm_bar_1_joint" type="fixed">
   <axis xyz="0.0 1 0.0"/>
-  <parent link="base_link"/>
+  <parent link="base_footprint"/>
   <child link="front_arm_bar_1"/>
   <origin xyz="-0.42 0.0 -0.0" rpy="0.0 0.0 0.0"/>
 </joint>
@@ -233,9 +233,9 @@
   </link>
 <joint name="laser_scanner_joint" type="fixed">
   <axis xyz="0.0 1 0.0"/>
-  <parent link="base_link"/>
+  <parent link="base_footprint"/>
   <child link="laser_scanner"/>
-  <origin xyz="-0.3 0.0 0.10" rpy="0.0 0.0 0.0"/>
+  <origin xyz="-0.1 0.0 0.10" rpy="0.0 0.0 0.0"/>
 </joint>
 
 <!-- DIFFENERNTIAL DRIVEEEEEEEEEEEEE -->
