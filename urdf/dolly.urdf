@@ -1,31 +1,170 @@
-<?xml version="1.0 ?>
-    <robot name = "dolly">
-        <link name="world"/>
-
-    <link name ="base">
-        <visual>
-            <geometry>
-                <box size ="0.75 0.4 0.1"/>
-            </geometry>
-            <material name="gray">
-                <color rgba=".2 .2 .2 1" />
-            </material>
-
-        </visual>
-    <inertial>
-        <mass value="1"/>
-        <inertia ixx = "0.01" ixy="0.01" ixy ="0" iyy="0.01" iyz="0" izz="0.01" />
+<?xml version="1.0" ?>
+  <robot name="explorer">
+  <link name="base_footprint">
+    <visual>
+      <geometry>
+          <box size="0.75 0.4 0.1"/>
+      </geometry>
+      <material name="gray">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+    </visual>
+  <inertial>
+            <mass value="1" />
+            <inertia ixx="0.01" ixy="0.0" ixz="0" 
+            iyy="0.01" iyz="0" izz="0.01" />
     </inertial>
     <collision>
-        <geometry>
-            <box size ="0.75 0.4 0.1"/>
-        </geometry>
+      <geometry>
+          <box size="0.75 0.4 0.1"/>
+      </geometry>
+      
     </collision>
-</link>
+  </link>
 
-<joint name "base_joint" type="fixed">
-    <parent link="world"/>
-    <child link="base"/>
-    <origin rpy=" 0 0 0" xyz ="0 0 0.135"/>
-</joint>
+  <link name="wheel_right_link">
+    <inertial>
+            <mass value="2" />
+            <inertia ixx="0.01" ixy="0.0" ixz="0" 
+            iyy="0.01" iyz="0" izz="0.01" />
+    </inertial>
+
+    <visual>
+      
+      <geometry>
+          <cylinder radius="0.15" length="0.1"/>
+      </geometry>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+    
+      <geometry>
+          <cylinder radius="0.15" length="0.1"/>
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>0</mu>
+            <mu2>0</mu2>
+            <slip1>1.0</slip1>
+            <slip2>1.0</slip2>
+          </ode>
+        </friction>
+      </surface>
+      <contact_coefficients mu="1" kp="1e+13" kd="1.0"/>
+    </collision>
+  </link>
+
+  <joint name="wheel_right_joint" type="continuous">
+    <origin xyz="0.2 0.25 0.0" rpy="1.57 0.0 0.0"/>
+    <parent link="base_footprint"/>
+    <child link="wheel_right_link"/>
+    <axis xyz="0.0 0.0 1.0"/>
+  </joint>
+
+  <link name="wheel_left_link">
+    <inertial>
+            <mass value="2" />
+            <inertia ixx="0.01" ixy="0.0" ixz="0" 
+            iyy="0.01" iyz="0" izz="0.01" />
+    </inertial>
+
+    <visual>
+      
+      <geometry>
+          <cylinder radius="0.15" length="0.1"/>
+      </geometry>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+          <cylinder radius="0.15" length="0.1"/>
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>0</mu>
+            <mu2>0</mu2>
+            <slip1>1.0</slip1>
+            <slip2>1.0</slip2>
+          </ode>
+        </friction>
+      </surface>
+      <contact_coefficients mu="1" kp="1e+13" kd="1.0"/>
+    </collision>
+  </link>
+
+  <joint name="wheel_left_joint" type="continuous">
+    <origin xyz="0.2 -0.25 0.0" rpy="1.57 0.0 0.0"/>
+    <parent link="base_footprint"/>
+    <child link="wheel_left_link"/>
+    <axis xyz="0.0 0.0 1.0"/>
+
+  </joint>
+
+
+
+  <link name="caster">
+    <inertial>
+            <mass value="1" />
+            <inertia ixx="0.01" ixy="0.0" ixz="0" 
+            iyy="0.01" iyz="0" izz="0.01" />
+    </inertial>
+
+    <visual>
+    
+      <geometry>
+        <sphere radius=".08" />
+      </geometry>
+      <material name="white" />
+    </visual>
+
+    <collision>
+      <geometry>
+        <sphere radius=".08" />
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>0</mu>
+            <mu2>0</mu2>
+            <slip1>1.0</slip1>
+            <slip2>1.0</slip2>
+          </ode>
+        </friction>
+      </surface>
+    </collision>
+  </link>
+
+  <joint name="caster_joint" type="continuous">
+    <origin xyz="-0.3 0.0 -0.07" rpy="0.0 0.0 0.0"/>
+    <axis xyz="0 0 1" />
+    <parent link="base_footprint"/>
+    <child link="caster"/>
+  </joint>
+
+  
+
+
+<!-- Gazebo colors to links as upper defined colors are only visible in RVIZ-->
+<gazebo reference="base_footprint">
+  <material>Gazebo/Orange</material>
+</gazebo>
+<gazebo reference="caster">
+  <material>Gazebo/Black</material>
+</gazebo>
+<gazebo reference="wheel_right_link">
+  <material>Gazebo/Blue</material>
+</gazebo>
+<gazebo reference="wheel_left_link">
+  <material>Gazebo/Blue</material>
+</gazebo> 
+
+
 </robot>
