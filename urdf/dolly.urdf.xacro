@@ -49,8 +49,9 @@
  
      </collision>
   </link>
- 
-   <link name="wheel_right_link">
+
+
+  <link name="wheel_right_link">
     <xacro:cylinder_inertia m="5" r="0.0475" h="0.025"/>
 
     <visual>
@@ -67,7 +68,7 @@
        <cylinder radius="0.0475" length="0.005"/>
       </geometry>
     </collision>
-   </link>
+  </link>
  
   <joint name="wheel_right_joint" type="continuous">
     <origin xyz="0.1 0.115 -0.015" rpy="1.57 0.0 0.0"/>
@@ -101,7 +102,54 @@
     <axis xyz="0.0 0.0 1.0"/>
 
   </joint>
- 
+
+  <!-- This block connects the wheel joint to an actuator (motor), which informs both
+simulation and visualization of the robot -->
+<!--########################## BASE TRANSMISSIONS ############################################-->
+<transmission name="front_left_wheel_trans" type="SimpleTransmission">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="front_left_wheel_motor">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+   <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="front_left_wheel_joint">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
+<transmission name="front_right_wheel_trans" type="SimpleTransmission">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="front_right_wheel_motor">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+   <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="front_right_wheel_joint">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
+<transmission name="rear_left_wheel_trans" type="SimpleTransmission">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="rear_left_wheel_motor">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+   <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="rear_left_wheel_joint">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
+<transmission name="rear_right_wheel_trans" type="SimpleTransmission">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="rear_right_wheel_motor">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+   <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="rear_right_wheel_joint">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
   <link name="caster">
     <xacro:sphere_inertia m="5" r="0.03"/>
     <visual>
@@ -172,7 +220,7 @@
   <xacro:base_inertia m="0.5" w="0.004" h="0.15" d="0.06"/>
 </link>
 <joint name="front_arm_bar_m_joint" type="fixed">
-  <axis xyz="0.0 1 0.0"/>
+  <axis xyz="0.0 0 0.0"/>
   <parent link="base_footprint"/>
   <child link="front_arm_bar_m"/>
   <origin xyz="-0.2 0.0 -0.018" rpy="0.0 0.0 0.0"/>
@@ -198,10 +246,10 @@
   <xacro:base_inertia m="0.5" w="0.004" h="0.08" d="0.06"/>
 </link>
 <joint name="front_arm_bar_s1_joint" type="fixed">
-  <axis xyz="0.0 1 0.0"/>
+  <axis xyz="0.0 0 0.0"/>
   <parent link="base_footprint"/>
   <child link="front_arm_bar_s1"/>
-  <origin xyz="-0.22 0.105 -0.018" rpy="0.0 0.0 0.55"/>
+  <origin xyz="-0.18 0.105 -0.018" rpy="0 0 -0.55"/>
 </joint>
 <!--==========================================================-->
  
@@ -224,10 +272,10 @@
   <xacro:base_inertia m="0.5" w="0.004" h="0.08" d="0.06"/>
 </link>
 <joint name="front_arm_bar_s2_joint" type="fixed">
-  <axis xyz="0.0 1 0.0"/>
+  <axis xyz="0.0 0 0.0"/>
   <parent link="base_footprint"/>
   <child link="front_arm_bar_s2"/>
-  <origin xyz="-0.22 -0.105 -0.018" rpy="0.0 0.0 -0.55"/>
+  <origin xyz="-0.18 -0.105 -0.018" rpy="0.0 0.0 0.55"/>
 </joint>
 <!--==========================================================-->
 
@@ -250,10 +298,10 @@
   <xacro:base_inertia m="0.5" w="0.004" h="0.08" d="0.06"/>
 </link>
 <joint name="front_arm_bar_r1_joint" type="fixed">
-  <axis xyz="0.0 1 0.0"/>
+  <axis xyz="0.0 0 0.0"/>
   <parent link="base_footprint"/>
   <child link="front_arm_bar_r1"/>
-  <origin xyz="-0.28 -0.138 -0.018" rpy="0.0 0.0 -1.578"/>
+  <origin xyz="-0.12 -0.138 -0.018" rpy="0.0 0.0 -1.578"/>
 </joint>
 <!--==========================================================-->
  
@@ -276,10 +324,10 @@
   <xacro:base_inertia m="0.5" w="0.004" h="0.08" d="0.06"/>
 </link>
 <joint name="front_arm_bar_r2_joint" type="fixed">
-  <axis xyz="0.0 1 0.0"/>
+  <axis xyz="0.0 0 0.0"/>
   <parent link="base_footprint"/>
   <child link="front_arm_bar_r2"/>
-  <origin xyz="-0.28 0.138 -0.018" rpy="0.0 0.0 -1.578"/>
+  <origin xyz="-0.12 0.138 -0.018" rpy="0.0 0.0 -1.578"/>
 </joint>
 <!--==========================================================-->
 
@@ -307,8 +355,7 @@
   <parent link="base_footprint"/>
   <child link="laser"/>
 </joint>
- 
- 
+
 <gazebo reference="laser">
   <sensor type="ray" name="laser">
       <pose>0 0 0 0 0 0</pose>
@@ -341,8 +388,11 @@
       </plugin>
   </sensor>
 </gazebo>
- 
- 
+
+
+
+
+
  <!-- DIFFENERNTIAL DRIVEEEEEEEEEEEEE -->
  
 <gazebo>
@@ -353,13 +403,14 @@
       <jointName>caster_joint</jointName>
       <leftJoint>wheel_left_joint</leftJoint>
       <rightJoint>wheel_right_joint</rightJoint>
-      <wheelSeparation>0.125</wheelSeparation>
+      <wheelSeparation>0.34</wheelSeparation>
       <wheelDiameter>0.095</wheelDiameter>
       <torque>20</torque>
       <commandTopic>/cmd_vel</commandTopic>
       <robotBaseFrame>base_link</robotBaseFrame>
       <publishWheelJointState>true</publishWheelJointState>
       <wheelAcceleration>2</wheelAcceleration>
+      <publishWheelTF>false</publishWheelTF>
   </plugin>
 </gazebo>
 
@@ -371,12 +422,31 @@
     <material>Gazebo/Black</material>
   </gazebo>
   <gazebo reference="wheel_right_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0" />
+    <kd value="1.0" />
+    <fdir1 value="1 0 0"/>
     <material>Gazebo/Blue</material>
   </gazebo>
   <gazebo reference="wheel_left_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0" />
+    <kd value="1.0" />
+    <fdir1 value="1 0 0"/>
     <material>Gazebo/Blue</material>
   </gazebo> 
   <gazebo reference="laser">
     <material>Gazebo/Red</material>
   </gazebo> 
+
+  <!--######################################################################-->
+<gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    <robotNamespace>/</robotNamespace>
+    <controlPeriod>0.001</controlPeriod>
+    <legacyModeNS>false</legacyModeNS>
+  </plugin>
+</gazebo>
 </robot>
