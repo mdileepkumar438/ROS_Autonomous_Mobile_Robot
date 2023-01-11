@@ -23,6 +23,7 @@
 
   <link name="base_link"/>
     
+    
 
   <joint name="base_joint" type="fixed">
     <parent link="base_link"/>
@@ -32,7 +33,7 @@
 
 
   <link name="base_footprint">
-    <xacro:base_inertia m="5" w="0.35" h="0.15" d="0.03"/>
+    <xacro:base_inertia m="15" w="0.35" h="0.15" d="0.03"/>
      <visual>
       <geometry>
           <box size="0.35 0.2 0.03"/>
@@ -52,7 +53,7 @@
 
 
   <link name="front_left_wheel_link">
-    <xacro:cylinder_inertia m="5" r="0.0475" h="0.025"/>
+    <xacro:cylinder_inertia m="12" r="0.0475" h="0.025"/>
 
     <visual>
       <geometry>
@@ -78,7 +79,7 @@
   </joint>
  
   <link name="front_right_wheel_link">
-    <xacro:cylinder_inertia m="5" r="0.0475" h="0.025"/>
+    <xacro:cylinder_inertia m="12" r="0.0475" h="0.025"/>
     <visual>
       <geometry>
           <cylinder radius="0.0475" length="0.025"/>
@@ -104,7 +105,7 @@
   </joint>
 
   <link name="rear_left_wheel_link">
-    <xacro:cylinder_inertia m="5" r="0.0475" h="0.025"/>
+    <xacro:cylinder_inertia m="2" r="0.0475" h="0.025"/>
 
     <visual>
       <geometry>
@@ -130,7 +131,7 @@
   </joint>
  
   <link name="rear_right_wheel_link">
-    <xacro:cylinder_inertia m="5" r="0.0475" h="0.025"/>
+    <xacro:cylinder_inertia m="2" r="0.0475" h="0.025"/>
     <visual>
       <geometry>
           <cylinder radius="0.0475" length="0.025"/>
@@ -154,52 +155,6 @@
     <axis xyz="0.0 0.0 1.0"/>
 
   </joint>
-  <!-- This block connects the wheel joint to an actuator (motor), which informs both
-simulation and visualization of the robot -->
-<!--########################## BASE TRANSMISSIONS ############################################-->
-<transmission name="front_left_wheel_trans" type="SimpleTransmission">
-  <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="front_left_wheel_motor">
-   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-   <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-  <joint name="front_left_wheel_joint">
-   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-  </joint>
-</transmission>
-
-<transmission name="front_right_wheel_trans" type="SimpleTransmission">
-  <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="front_right_wheel_motor">
-   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-   <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-  <joint name="front_right_wheel_joint">
-   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-  </joint>
-</transmission>
-
-<transmission name="rear_left_wheel_trans" type="SimpleTransmission">
-  <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="rear_left_wheel_motor">
-   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-   <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-  <joint name="rear_left_wheel_joint">
-   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-  </joint>
-</transmission>
-
-<transmission name="rear_right_wheel_trans" type="SimpleTransmission">
-  <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="rear_right_wheel_motor">
-   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-   <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-  <joint name="rear_right_wheel_joint">
-   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-  </joint>
-</transmission>
 
 
  
@@ -418,28 +373,77 @@ simulation and visualization of the robot -->
   </sensor>
 </gazebo>
 
-
-
+<!-- This block connects the wheel joint to an actuator (motor), which informs both
+    simulation and visualization of the robot -->
+    <!--########################## BASE TRANSMISSIONS ############################################-->
+    <transmission name="front_left_wheel_trans" type="SimpleTransmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="front_left_wheel_motor">
+       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+       <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="front_left_wheel_joint">
+       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+    
+    <transmission name="front_right_wheel_trans" type="SimpleTransmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="front_right_wheel_motor">
+       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+       <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="front_right_wheel_joint">
+       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+    
+    <transmission name="rear_left_wheel_trans" type="SimpleTransmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="rear_left_wheel_motor">
+       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+       <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="rear_left_wheel_joint">
+       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+    
+    <transmission name="rear_right_wheel_trans" type="SimpleTransmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="rear_right_wheel_motor">
+       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+       <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="rear_right_wheel_joint">
+       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
 
 
  <!-- DIFFENERNTIAL DRIVEEEEEEEEEEEEE -->
- 
+<!--######################################################################-->
+
 <gazebo>
     <plugin name="Dolly_bot_controller" filename="libgazebo_ros_diff_drive.so">
-      <alwaysOn>false</alwaysOn>
+      <alwaysOn>true</alwaysOn>
       <legacyMode>false</legacyMode>
-      <updateRate>30</updateRate>
-      <jointName>caster_joint</jointName>
-      <leftJoint>wheel_left_joint</leftJoint>
-      <rightJoint>wheel_right_joint</rightJoint>
+      <updateRate>50.0</updateRate>
+      <leftJoint>front_left_wheel_joint,rear_left_wheel_joint</leftJoint>
+      <rightJoint>front_right_wheel_joint,rear_right_wheel_joint</rightJoint>
       <wheelSeparation>0.34</wheelSeparation>
       <wheelDiameter>0.095</wheelDiameter>
       <torque>20</torque>
-      <commandTopic>/cmd_vel</commandTopic>
-      <robotBaseFrame>base_link</robotBaseFrame>
+      <odometryFrame>map</odometryFrame>
+      <odometryTopic>odom</odometryTopic>
+      <commandTopic>mybot/cmd_vel</commandTopic>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
       <publishWheelJointState>true</publishWheelJointState>
-      <wheelAcceleration>2</wheelAcceleration>
+      <wheelAcceleration>2.8</wheelAcceleration>
       <publishWheelTF>false</publishWheelTF>
+      <publishTf>1</publishTf>
+      <odometrySource>world</odometrySource>
+      <rosDebugLevel>Debug</rosDebugLevel>
   </plugin>
 </gazebo>
 
@@ -447,35 +451,56 @@ simulation and visualization of the robot -->
   <gazebo reference="base_footprint">
     <material>Gazebo/Orange</material>
   </gazebo>
-  <gazebo reference="caster">
-    <material>Gazebo/Black</material>
-  </gazebo>
-  <gazebo reference="wheel_right_link">
-    <mu1 value="1.0"/>
-    <mu2 value="1.0"/>
-    <kp value="10000000.0" />
-    <kd value="1.0" />
-    <fdir1 value="1 0 0"/>
-    <material>Gazebo/Blue</material>
-  </gazebo>
-  <gazebo reference="wheel_left_link">
-    <mu1 value="1.0"/>
-    <mu2 value="1.0"/>
-    <kp value="10000000.0" />
-    <kd value="1.0" />
-    <fdir1 value="1 0 0"/>
-    <material>Gazebo/Blue</material>
-  </gazebo> 
+
   <gazebo reference="laser">
     <material>Gazebo/Red</material>
   </gazebo> 
 
-  <!--######################################################################-->
-<gazebo>
+  <gazebo reference="front_left_wheel_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0" />
+    <kd value="1.0" />
+    <fdir1 value="1 0 0"/>
+    <material>Gazebo/Blue</material>
+  </gazebo>
+   
+  <gazebo reference="front_right_wheel_link">
+   <mu1 value="1.0"/>
+   <mu2 value="1.0"/>
+   <kp value="10000000.0" />
+   <kd value="1.0" />
+   <fdir1 value="1 0 0"/>
+   <material>Gazebo/Blue</material>
+  </gazebo>
+  
+  <gazebo reference="rear_left_wheel_link">
+   <mu1 value="1.0"/>
+   <mu2 value="1.0"/>
+   <kp value="10000000.0" />
+   <kd value="1.0" />
+   <fdir1 value="1 0 0"/>
+   <material>Gazebo/Blue</material>
+  </gazebo>
+  
+  <gazebo reference="rear_left_wheel_link">
+   <mu1 value="1.0"/>
+   <mu2 value="1.0"/>
+   <kp value="10000000.0" />
+   <kd value="1.0" />
+   <fdir1 value="1 0 0"/>
+   <material>Gazebo/Blue</material>
+  </gazebo>
+
+ <!--######################################################################-->
+   
+ <gazebo>
   <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
     <robotNamespace>/</robotNamespace>
-    <controlPeriod>0.001</controlPeriod>
     <legacyModeNS>false</legacyModeNS>
+    <controlPeriod>0.001</controlPeriod>
+
   </plugin>
 </gazebo>
+
 </robot>
