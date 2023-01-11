@@ -30,56 +30,57 @@
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
 
+
   <link name="base_footprint">
-    <xacro:base_inertia m="10" w="0.35" h="0.2" d="0.05"/>
-    <visual>
+    <xacro:base_inertia m="5" w="0.35" h="0.15" d="0.03"/>
+     <visual>
       <geometry>
-          <box size="0.35 0.2 0.05"/>
+          <box size="0.35 0.2 0.03"/>
       </geometry>
       <material name="gray">
         <color rgba=".2 .2 .2 1" />
       </material>
-    </visual>
+     </visual>
     
-    <collision>
+     <collision>
       <geometry>
-        <box size="0.35 0.2 0.05"/>
-    </geometry>
-      
-    </collision>
+         <box size="0.35 0.2 0.03"/>
+      </geometry>
+ 
+     </collision>
   </link>
+ 
+   <link name="wheel_right_link">
+    <xacro:cylinder_inertia m="5" r="0.0475" h="0.025"/>
 
-  <link name="wheel_right_link">
-    <xacro:cylinder_inertia m="10" r="0.0475" h="0.05"/>
     <visual>
       <geometry>
-          <cylinder radius="0.0475" length="0.05"/>
+         <cylinder radius="0.0475" length="0.025"/>
       </geometry>
       <material name="white">
         <color rgba="1 1 1 1"/>
       </material>
     </visual>
-
+ 
     <collision>
       <geometry>
-        <cylinder radius="0.0475" length="0.05"/>
+       <cylinder radius="0.0475" length="0.005"/>
       </geometry>
-      
     </collision>
-  </link>
-
+   </link>
+ 
   <joint name="wheel_right_joint" type="continuous">
-    <origin xyz="0.1 0.125 -0.015" rpy="1.57 0.0 0.0"/>
+    <origin xyz="0.1 0.115 -0.015" rpy="1.57 0.0 0.0"/>
     <parent link="base_footprint"/>
     <child link="wheel_right_link"/>
     <axis xyz="0.0 0.0 1.0"/>
   </joint>
-
+ 
   <link name="wheel_left_link">
-    <xacro:cylinder_inertia m="10" r="0.0475" h="0.05"/>
+    <xacro:cylinder_inertia m="5" r="0.0475" h="0.025"/>
     <visual>
       <geometry>
-          <cylinder radius="0.0475" length="0.05"/>
+          <cylinder radius="0.0475" length="0.025"/>
       </geometry>
       <material name="white">
         <color rgba="1 1 1 1"/>
@@ -88,20 +89,19 @@
 
     <collision>
       <geometry>
-        <cylinder radius="0.0475" length="0.05"/>
+        <cylinder radius="0.0475" length="0.025"/>
       </geometry>
-      
     </collision>
   </link>
-
+ 
   <joint name="wheel_left_joint" type="continuous">
-    <origin xyz="0.1 -0.125 -0.015" rpy="1.57 0.0 0.0"/>
+    <origin xyz="0.1 -0.115 -0.015" rpy="1.57 0.0 0.0"/>
     <parent link="base_footprint"/>
     <child link="wheel_left_link"/>
     <axis xyz="0.0 0.0 1.0"/>
 
   </joint>
-
+ 
   <link name="caster">
     <xacro:sphere_inertia m="5" r="0.03"/>
     <visual>
@@ -115,7 +115,6 @@
       <geometry>
         <sphere radius="0.03" />
       </geometry>
-      
     </collision>
   </link>
 
@@ -125,250 +124,233 @@
     <parent link="base_footprint"/>
     <child link="caster"/>
   </joint>
-
-
-  <!--Front arm-->
-  <link name="front_arm_bar">
-    <visual>
-        <geometry>
-            <box size="0.025 0.025 0.025"/>
-        </geometry>
-        <material name="gray">
-          <color rgba=".2 .2 .2 1" />
-        </material>
-    </visual>
-
-    <collision>
+ 
+ 
+<!--Front arm-->
+<link name="front_arm_bar">
+  <visual>
       <geometry>
-        <box size="0.025 0.025 0.025"/>
+          <box size="0.025 0.025 0.025"/>
       </geometry>
-    </collision>
+      <material name="gray">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+  </visual>
 
-    <inertial>
-        <mass value="0.5"/>
-        <inertia ixx="0.01" ixy="0.0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
-    </inertial>
-  </link>
-  <joint name="front_arm_bar_joint" type="fixed">
-    <axis xyz="0.0 1 0.0"/>
-    <parent link="base_footprint"/>
-    <child link="front_arm_bar"/>
-    <origin xyz="-0.187 0.0 -0.0" rpy="0.0 0.0 0.0"/>
-  </joint>
-  <!--==========================================================-->
+  <collision>
+    <geometry>
+      <box size="0.025 0.025 0.025"/>
+    </geometry>
+  </collision>
 
-  <link name="front_arm_bar_m">
-    <visual>
-        <geometry>
-            <box size="0.004 0.1 0.06"/>
-        </geometry>
-        <material name="gray">
-          <color rgba=".2 .2 .2 1" />
-        </material>
-    </visual>
+  
+  <xacro:base_inertia m="1" w="0.025" h="0.025" d="0.025"/>
+</link>
+<joint name="front_arm_bar_joint" type="fixed">
+  <axis xyz="0.0 1 0.0"/>
+  <parent link="base_footprint"/>
+  <child link="front_arm_bar"/>
+  <origin xyz="-0.187 0.0 -0.0" rpy="0.0 0.0 0.0"/>
+</joint>
+<!--==========================================================-->
 
-    <collision>
+<link name="front_arm_bar_m">
+  <visual>
       <geometry>
-        <box size="0.004 0.15 0.06"/>
+          <box size="0.004 0.15 0.06"/>
       </geometry>
-    </collision>
+      <material name="gray">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+  </visual>
 
-    <inertial>
-      <mass value="0.5"/>
-      <inertia ixx="0.01" ixy="0.0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
-    </inertial>
-  </link>
-  <joint name="front_arm_bar_m_joint" type="fixed">
-    <axis xyz="0.0 1 0.0"/>
-    <parent link="base_footprint"/>
-    <child link="front_arm_bar_m"/>
-    <origin xyz="-0.2 0.0 -0.018" rpy="0.0 0.0 0.0"/>
-  </joint>
-  <!--==========================================================-->
+  <collision>
+    <geometry>
+      <box size="0.004 0.15 0.06"/>
+    </geometry>
+  </collision>
+  <xacro:base_inertia m="0.5" w="0.004" h="0.15" d="0.06"/>
+</link>
+<joint name="front_arm_bar_m_joint" type="fixed">
+  <axis xyz="0.0 1 0.0"/>
+  <parent link="base_footprint"/>
+  <child link="front_arm_bar_m"/>
+  <origin xyz="-0.2 0.0 -0.018" rpy="0.0 0.0 0.0"/>
+</joint>
+<!--==========================================================-->
 
-  <link name="front_arm_bar_s1">
-    <visual>
-        <geometry>
-            <box size="0.004 0.08 0.06"/>
-        </geometry>
-        <material name="gray">
-          <color rgba=".2 .2 .2 1" />
-        </material>
-    </visual>
-
-    <collision>
+<link name="front_arm_bar_s1">
+  <visual>
       <geometry>
-        <box size="0.004 0.08 0.06"/>
+          <box size="0.004 0.08 0.06"/>
       </geometry>
-    </collision>
+      <material name="gray">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+  </visual>
 
-    <inertial>
-      <mass value="0.5"/>
-      <inertia ixx="0.01" ixy="0.0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
-    </inertial>
-  </link>
-  <joint name="front_arm_bar_s1_joint" type="fixed">
-    <axis xyz="0.0 1 0.0"/>
-    <parent link="base_footprint"/>
-    <child link="front_arm_bar_s1"/>
-    <origin xyz="-0.22 0.082 -0.018" rpy="0.0 0.0 0.55"/>
-  </joint>
-  <!--==========================================================-->
+  <collision>
+    <geometry>
+      <box size="0.004 0.08 0.06"/>
+    </geometry>
+  </collision>
 
-  <link name="front_arm_bar_s2">
-    <visual>
-        <geometry>
-            <box size="0.004 0.08 0.06"/>
-        </geometry>
-        <material name="gray">
-          <color rgba=".2 .2 .2 1" />
-        </material>
-    </visual>
-
-    <collision>
+  <xacro:base_inertia m="0.5" w="0.004" h="0.08" d="0.06"/>
+</link>
+<joint name="front_arm_bar_s1_joint" type="fixed">
+  <axis xyz="0.0 1 0.0"/>
+  <parent link="base_footprint"/>
+  <child link="front_arm_bar_s1"/>
+  <origin xyz="-0.22 0.105 -0.018" rpy="0.0 0.0 0.55"/>
+</joint>
+<!--==========================================================-->
+ 
+<link name="front_arm_bar_s2">
+  <visual>
       <geometry>
-        <box size="0.004 0.08 0.06"/>
+          <box size="0.004 0.08 0.06"/>
       </geometry>
-    </collision>
+      <material name="gray">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+  </visual>
 
-    <inertial>
-      <mass value="0.5"/>
-      <inertia ixx="0.01" ixy="0.0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
-    </inertial>
-  </link>
-  <joint name="front_arm_bar_s2_joint" type="fixed">
-    <axis xyz="0.0 1 0.0"/>
-    <parent link="base_footprint"/>
-    <child link="front_arm_bar_s2"/>
-    <origin xyz="-0.22 -0.082 -0.018" rpy="0.0 0.0 -0.55"/>
-  </joint>
-  <!--==========================================================-->
+  <collision>
+    <geometry>
+      <box size="0.004 0.08 0.06"/>
+    </geometry>
+  </collision>
 
-  <link name="front_arm_bar_r1">
-    <visual>
-        <geometry>
-            <box size="0.004 0.05 0.06"/>
-        </geometry>
-        <material name="gray">
-          <color rgba=".2 .2 .2 1" />
-        </material>
-    </visual>
+  <xacro:base_inertia m="0.5" w="0.004" h="0.08" d="0.06"/>
+</link>
+<joint name="front_arm_bar_s2_joint" type="fixed">
+  <axis xyz="0.0 1 0.0"/>
+  <parent link="base_footprint"/>
+  <child link="front_arm_bar_s2"/>
+  <origin xyz="-0.22 -0.105 -0.018" rpy="0.0 0.0 -0.55"/>
+</joint>
+<!--==========================================================-->
 
-    <collision>
+<link name="front_arm_bar_r1">
+  <visual>
       <geometry>
-        <box size="0.004 0.05 0.06"/>
+          <box size="0.004 0.08 0.06"/>
       </geometry>
-    </collision>
+      <material name="gray">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+  </visual>
 
-    <inertial>
-      <mass value="0.5"/>
-      <inertia ixx="0.01" ixy="0.0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
-    </inertial>
-  </link>
-  <joint name="front_arm_bar_r1_joint" type="fixed">
-    <axis xyz="0.0 1 0.0"/>
-    <parent link="base_footprint"/>
-    <child link="front_arm_bar_r1"/>
-    <origin xyz="-0.265 -0.115 -0.018" rpy="0.0 0.0 -1.578"/>
-  </joint>
-  <!--==========================================================-->
+  <collision>
+    <geometry>
+      <box size="0.004 0.08 0.06"/>
+    </geometry>
+  </collision>
 
-  <link name="front_arm_bar_r2">
-    <visual>
-        <geometry>
-            <box size="0.004 0.05 0.06"/>
-        </geometry>
-        <material name="gray">
-          <color rgba=".2 .2 .2 1" />
-        </material>
-    </visual>
-
-    <collision>
+  <xacro:base_inertia m="0.5" w="0.004" h="0.08" d="0.06"/>
+</link>
+<joint name="front_arm_bar_r1_joint" type="fixed">
+  <axis xyz="0.0 1 0.0"/>
+  <parent link="base_footprint"/>
+  <child link="front_arm_bar_r1"/>
+  <origin xyz="-0.28 -0.138 -0.018" rpy="0.0 0.0 -1.578"/>
+</joint>
+<!--==========================================================-->
+ 
+<link name="front_arm_bar_r2">
+  <visual>
       <geometry>
-        <box size="0.004 0.05 0.06"/>
+          <box size="0.004 0.08 0.06"/>
       </geometry>
-    </collision>
+      <material name="gray">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+  </visual>
 
-    <inertial>
-      <mass value="0.5"/>
-      <inertia ixx="0.01" ixy="0.0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
-    </inertial>
-  </link>
-  <joint name="front_arm_bar_r2_joint" type="fixed">
-    <axis xyz="0.0 1 0.0"/>
-    <parent link="base_footprint"/>
-    <child link="front_arm_bar_r2"/>
-    <origin xyz="-0.265 0.115 -0.018" rpy="0.0 0.0 -1.578"/>
-  </joint>
-  <!--==========================================================-->
+  <collision>
+    <geometry>
+     <box size="0.004 0.08 0.06"/>
+    </geometry>
+  </collision>
 
+  <xacro:base_inertia m="0.5" w="0.004" h="0.08" d="0.06"/>
+</link>
+<joint name="front_arm_bar_r2_joint" type="fixed">
+  <axis xyz="0.0 1 0.0"/>
+  <parent link="base_footprint"/>
+  <child link="front_arm_bar_r2"/>
+  <origin xyz="-0.28 0.138 -0.018" rpy="0.0 0.0 -1.578"/>
+</joint>
+<!--==========================================================-->
 
+<!-- laser -->
+<link name="laser">
+  <xacro:cylinder_inertia m="2" r="0.025" h="0.025"/>
 
-  <!-- laser -->
-  <link name="laser">
-    <inertial>
-      <mass value="1e-5"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0.0" iyy="1e-6" iyz="0.0" izz="1e-6"/>
-    </inertial>
+  <visual>
+    <geometry>
+      <cylinder radius="0.025" length="0.025"/> 
+     </geometry>
+  </visual>
 
-    <visual>
-      <geometry>
-        <cylinder radius="0.025" length="0.025"/> 
-       </geometry>
-    </visual>
-
-    <collision>
-      <origin/>
-      <geometry>
-        <cylinder radius="0.025" length="0.025"/> 
-      </geometry>
-    </collision>
-  </link>
-
-  <joint name="laser_joint" type="fixed">
-    <origin xyz="-0.1 0.0 0.038" rpy="0.0 0.0 3.14"/>
-    <axis xyz="0 0 1" />
-    <parent link="base_footprint"/>
-    <child link="laser"/>
-  </joint>
-
-
-  <gazebo reference="laser">
-    <sensor type="ray" name="laser">
-        <pose>0 0 0 0 0 0</pose>
-        <visualize>true</visualize>
-        <update_rate>40</update_rate>
-        <ray>
-            <scan>
-                <horizontal>
-                    <samples>720</samples>
-                    <resolution>0.1</resolution>
-                    <min_angle>-1.578</min_angle>
-                    <max_angle>1.578</max_angle>
-                </horizontal>
-            </scan>
-            <range>
-                <min>0.1</min>
-                <max>2</max>
-                <resolution>0.1</resolution>
-            </range>
-        </ray>
-        <plugin name="laser_controller" filename="libgazebo_ros_laser.so">
-
-            <topicName>/scan</topicName>
-            <frameName>laser</frameName>
-        </plugin>
-    </sensor>
-  </gazebo>
-
-
-  <!-- DIFFENERNTIAL DRIVEEEEEEEEEEEEE -->
-
-  <gazebo>
+  <collision>
+    <origin/>
+    <geometry>
+      <cylinder radius="0.025" length="0.025"/> 
+    </geometry>
+  </collision>
+</link>
+ 
+<joint name="laser_joint" type="fixed">
+  <origin xyz="0.0505 0.0 0.038" rpy="0.0 0.0 3.14"/>
+  <axis xyz="0 0 1" />
+  <parent link="base_footprint"/>
+  <child link="laser"/>
+</joint>
+ 
+ 
+<gazebo reference="laser">
+  <sensor type="ray" name="laser">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>20</update_rate>
+      <ray>
+          <scan>
+              <horizontal>
+                  <samples>1440</samples>
+                  <resolution>0.5</resolution>
+                  <min_angle>-1.578</min_angle>
+                  <max_angle>1.578</max_angle>
+              </horizontal>
+          </scan>
+          <range>
+            <min>0.10</min>
+            <max>3.0</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+          </noise>
+      </ray>
+      <plugin name="laser_controller" filename="libgazebo_ros_laser.so">
+        
+          <topicName>/scan</topicName>
+          <frameName>laser</frameName>
+      </plugin>
+  </sensor>
+</gazebo>
+ 
+ 
+ <!-- DIFFENERNTIAL DRIVEEEEEEEEEEEEE -->
+ 
+<gazebo>
     <plugin name="Dolly_bot_controller" filename="libgazebo_ros_diff_drive.so">
       <alwaysOn>false</alwaysOn>
       <legacyMode>false</legacyMode>
       <updateRate>30</updateRate>
+      <jointName>caster_joint</jointName>
       <leftJoint>wheel_left_joint</leftJoint>
       <rightJoint>wheel_right_joint</rightJoint>
       <wheelSeparation>0.125</wheelSeparation>
@@ -377,14 +359,10 @@
       <commandTopic>/cmd_vel</commandTopic>
       <robotBaseFrame>base_link</robotBaseFrame>
       <publishWheelJointState>true</publishWheelJointState>
-    </plugin>
-  </gazebo>
-  <gazebo>
-    <plugin name="joint_state_publisher"
-            filename="libgazebo_ros_joint_state_publisher.so">
-        <jointName>caster_joint</jointName>
-    </plugin>
-  </gazebo>
+      <wheelAcceleration>2</wheelAcceleration>
+  </plugin>
+</gazebo>
+
   <!-- Gazebo colors to links as upper defined colors are only visible in RVIZ-->
   <gazebo reference="base_footprint">
     <material>Gazebo/Orange</material>
