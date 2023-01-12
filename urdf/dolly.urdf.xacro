@@ -262,7 +262,7 @@
       xyz="0 0 0"
       rpy="0 0 0" />
     <geometry>
-      <mesh filename="package://explorer_bot/models/world/meshes/hollow_sphere.stl" />
+      <mesh filename="package://explorer_bot/models/world/meshes/hollow_sphere.stl" scale="0.007 0.007 0.007"/>
     </geometry>
     <material
       name="">
@@ -275,7 +275,7 @@
       xyz="0 0 0"
       rpy="0 0 0" />
     <geometry>
-      <mesh filename="package://explorer_bot/models/world/meshes/hollow_sphere.stl" />
+      <mesh filename="package://explorer_bot/models/world/meshes/hollow_sphere.stl" scale="0.007 0.007 0.007"/>
     </geometry>
   </collision>
 </link>
@@ -284,7 +284,7 @@
   <axis xyz="0 0 1"/>
   <parent link="base_link"/>
   <child link="arm_base"/>
-  <origin rpy="0 0 0" xyz="0.20 0.0 1"/>
+  <origin rpy="3.14 0 0" xyz="-0.1 0.2 0.2"/>
 </joint>
 
 
