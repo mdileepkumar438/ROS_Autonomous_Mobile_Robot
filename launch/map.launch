@@ -38,6 +38,8 @@
    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
    
     <node pkg="gmapping" type="slam_gmapping" name="maping_node">
+        
+        
         <param name="base_frame" value="base_link" />
         <param name="delta" value="0.1" />
     </node>

@@ -3,7 +3,7 @@ raytrace_range: 8.5
 footprint: [[0.3,0.14],[0.3,-0.14],[-0.3,-0.14],[-0.3,0.14]]
 map_topic: /map
 subscribe_to_update: true
-observation_sources: laser_scan_sensor
+observation_sources: laser
 laser_scan_sensor: {sensor_frame: laser,data_type: LaserScan, topic: scan,marking: true , clearing: true }
 global_frame: map
 robot_base_frame: base_link
