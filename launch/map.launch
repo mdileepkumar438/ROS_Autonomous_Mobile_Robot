@@ -41,6 +41,13 @@
         <param name="base_frame" value="base_link" />
         <param name="delta" value="0.1" />
     </node>
-
+    <node pkg="move_base" type="move_base" name="Base_move" output="screen">
+        <param name="controller_frequency" value="10.0" />
+        <rosparam file="$(find explorer_bot)/config/costmap_common_params.yaml" command="load" ns="global_costmap"/>
+        <rosparam file="$(find explorer_bot)/config/costmap_common_params.yaml" command="load" ns="local_costmap"/>
+        <rosparam file="$(find explorer_bot)/config/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find explorer_bot)/config/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find explorer_bot)/config/trajectory_planner.yaml" command="load" />
+      </node>
 
   </launch>
