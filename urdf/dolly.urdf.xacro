@@ -60,6 +60,82 @@
     </collision>
 </link>
 
+<link name="arm_link">
+  <visual>
+    <origin rpy="0 0 0" xyz="0 0 0.1585"/>
+    <geometry>
+      <box size="0.0356 0.05 0.3"/>
+    </geometry>
+    
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0 0 0.1585"/>
+    <geometry>
+      <box size="0.0356 0.05 0.3"/>
+    </geometry>
+  </collision>
+  <inertial>
+    <!-- CENTER OF MASS -->
+    
+    <mass value="0.29302326"/>
+    <!-- box inertia: 1/12*m(y^2+z^2), ... -->
+    <inertia ixx="0.00251484771035" ixy="0" ixz="0" iyy="0.00248474836108" iyz="0" izz="9.19936757328e-05"/>
+  </inertial>
+</link>
+<joint name="arm_joint" type="continuous">
+  <parent link="base_link"/>
+  <child link="arm_link"/>
+  <dynamics damping="3.0" friction="0.3"/>
+  <limit effort="30.0" lower="-1.57079632679" upper="1.57079632679" velocity="5.0"/>
+  <origin rpy="0 0 0" xyz="-0.05 0 0.1"/>
+  <axis xyz="0 1 0"/>
+</joint>
+
+<link name="hand">
+  <inertial>
+    <origin
+      xyz="7.7128E-09 -0.063005 -3.01969999961422E-08"
+      rpy="0 0 0" />
+    <mass
+      value="1.6004" />
+    <inertia
+      ixx="0.00552196561445819"
+      ixy="7.9550614501301E-10"
+      ixz="-1.34378458924839E-09"
+      iyy="0.00352397447953875"
+      iyz="-1.10071809773382E-08"
+      izz="0.00553739792746489" />
+  </inertial>
+  <visual>
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://explorer_bot/models/world/meshes/hollow_sphere.stl" scale="0.007 0.007 0.007"/>
+    </geometry>
+    <material
+      name="">
+      <color
+        rgba="0.79216 0.81961 0.93333 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://explorer_bot/models/world/meshes/hollow_sphere.stl" scale="0.007 0.007 0.007"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="hand_joint" type="fixed">
+  <axis xyz="0 0 1"/>
+  <parent link="base_link"/>
+  <child link="hand"/>
+  <origin rpy="0 1.578 3.14" xyz="0.05 0.27 0.2"/>
+</joint>
+
 <link name="front_left_wheel">
     <inertial>
       <origin
@@ -242,50 +318,7 @@
     <origin rpy ="0 0 0" xyz= "-0.176 -0.205 0"/>
 </joint>
 
-<link name="arm_base">
-  <inertial>
-    <origin
-      xyz="7.7128E-09 -0.063005 -3.01969999961422E-08"
-      rpy="0 0 0" />
-    <mass
-      value="1.6004" />
-    <inertia
-      ixx="0.00552196561445819"
-      ixy="7.9550614501301E-10"
-      ixz="-1.34378458924839E-09"
-      iyy="0.00352397447953875"
-      iyz="-1.10071809773382E-08"
-      izz="0.00553739792746489" />
-  </inertial>
-  <visual>
-    <origin
-      xyz="0 0 0"
-      rpy="0 0 0" />
-    <geometry>
-      <mesh filename="package://explorer_bot/models/world/meshes/hollow_sphere.stl" scale="0.007 0.007 0.007"/>
-    </geometry>
-    <material
-      name="">
-      <color
-        rgba="0.79216 0.81961 0.93333 1" />
-    </material>
-  </visual>
-  <collision>
-    <origin
-      xyz="0 0 0"
-      rpy="0 0 0" />
-    <geometry>
-      <mesh filename="package://explorer_bot/models/world/meshes/hollow_sphere.stl" scale="0.007 0.007 0.007"/>
-    </geometry>
-  </collision>
-</link>
 
-<joint name="arm_base_joint" type="continuous">
-  <axis xyz="0 0 1"/>
-  <parent link="base_link"/>
-  <child link="arm_base"/>
-  <origin rpy="3.14 0 0" xyz="-0.1 0.2 0.2"/>
-</joint>
 
 
 
@@ -513,6 +546,12 @@
   </gazebo>
 <!--######################################################################-->
 <gazebo>
+  <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+    <jointName>arm_joint</jointName>
+  </plugin>
+</gazebo>
+
+<gazebo>
   <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
     <legacyMode>false</legacyMode>
     <alwaysOn>true</alwaysOn>
@@ -609,5 +648,16 @@
    <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
   </joint>
 </transmission>
-<!--######################################################################-->
+<!--#######################- ARM_Hand -###############################################-->
+
+<transmission name="arm_base_trans" type="SimpleTransmission">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="arm_base_motor">
+   <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+   <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_joint">
+   <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+  </joint>
+</transmission>
 </robot>
