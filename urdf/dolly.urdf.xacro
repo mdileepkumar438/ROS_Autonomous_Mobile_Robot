@@ -1,0 +1,674 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro = "http://www.ros.org/wiki/xacro" name="dolly">
+
+  <xacro:macro name="base_inertia" params="m w h d">
+    <inertial>
+      <mass value="${m}"/>
+      <inertia ixx="${m / 12.0 * (d*d + h*h)}" ixy="0.0" ixz="0.0" iyy="${m / 12.0 * (w*w + h*h)}" iyz="0.0" izz="${m / 12.0 * (w*w + d*d)}"/>
+    </inertial>
+  </xacro:macro>
+  <xacro:macro name="cylinder_inertia" params="m r h">
+    <inertial>
+      <mass value="${m}"/>
+      <inertia ixx="${m*(3*r*r+h*h)/12}" ixy = "0" ixz = "0" iyy="${m*(3*r*r+h*h)/12}" iyz = "0" izz="${m*r*r/2}"/> 
+    </inertial>
+  </xacro:macro>
+  <xacro:macro name="sphere_inertia" params="m r">
+    <inertial>
+      <mass value="${m}"/>
+      <inertia ixx="${2.0*m*(r*r)/5.0}" ixy = "0" ixz = "0" iyy="${2.0*m*(r*r)/5.0}" iyz = "0" izz="${2.0*m*(r*r)/5.0}"/> 
+    </inertial>
+  </xacro:macro>
+
+<link name="base_link">
+    <inertial>
+      <origin
+        xyz="0.0030946 4.78250032638821E-11 0.053305"
+        rpy="0 0 0" />
+      <mass
+        value="47.873" />
+      <inertia
+        ixx="0.774276574699151"
+        ixy="-1.03781944357671E-10"
+        ixz="0.00763014265820928"
+        iyy="1.64933255189991"
+        iyz="1.09578155845563E-12"
+        izz="2.1239326987473" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh filename="package://explorer_bot/models/world/meshes/robot_base.stl" scale="0.8 0.8 0.8"/>
+          
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh filename="package://explorer_bot/models/world/meshes/robot_base.stl" scale="0.8 0.8 0.8"/>
+      </geometry>
+    </collision>
+</link>
+
+<link name="arm_link">
+  <visual>
+    <origin rpy="0 0 0" xyz="0 0 0.1585"/>
+    <geometry>
+      <box size="0.0356 0.05 0.3"/>
+    </geometry>
+    
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0 0 0.1585"/>
+    <geometry>
+      <box size="0.0356 0.05 0.3"/>
+    </geometry>
+  </collision>
+  <inertial>
+    <!-- CENTER OF MASS -->
+    
+    <mass value="0.29302326"/>
+    <!-- box inertia: 1/12*m(y^2+z^2), ... -->
+    <inertia ixx="0.00251484771035" ixy="0" ixz="0" iyy="0.00248474836108" iyz="0" izz="9.19936757328e-05"/>
+  </inertial>
+</link>
+<joint name="arm_joint" type="revolute">
+  <parent link="base_link"/>
+  <child link="arm_link"/>
+  <dynamics damping="3.0" friction="0.3"/>
+  <limit effort="30.0" lower="-1.57079632679" upper="1.57079632679" velocity="5.0"/>
+  <origin rpy="0 0 0" xyz="-0.05 0 0.1"/>
+  <axis xyz="0 1 0"/>
+</joint>
+
+<link name="hand">
+  <inertial>
+    
+    <mass
+      value="1.6004" />
+    <inertia
+      ixx="0.0038550675"
+      ixy="0"
+      ixz="0"
+      iyy="0.0038550675"
+      iyz="0"
+      izz="0.0038550675" />
+  </inertial>
+  <visual>
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://explorer_bot/models/world/meshes/hollow_sphere.stl" scale="0.007 0.007 0.007"/>
+    </geometry>
+    <material
+      name="">
+      <color
+        rgba="0.79216 0.81961 0.93333 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://explorer_bot/models/world/meshes/hollow_sphere.stl" scale="0.007 0.007 0.007"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="hand_joint" type="revolute">
+  <axis xyz="0 1 0"/>
+  <parent link="base_link"/>
+  <child link="hand"/>
+  <dynamics damping="3.0" friction="0.3"/>
+  <limit effort="30.0" lower="-1.57079632679" upper="1.57079632679" velocity="5.0"/>
+  <origin rpy="0 1.578 3.14" xyz="0.05 0.27 0.2"/>
+</joint>
+
+<link name="front_left_wheel">
+    <inertial>
+      <origin
+        xyz="-4.1867E-18 0.0068085 -1.65658661799998E-18"
+        rpy="0 0 0" />
+      <mass
+        value="2.6578" />
+      <inertia
+        ixx="0.00856502765719703"
+        ixy="1.5074118157338E-19"
+        ixz="-4.78150098725052E-19"
+        iyy="0.013670640432096"
+        iyz="-2.68136447099727E-19"
+        izz="0.00856502765719703" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh filename="package://explorer_bot/models/world/meshes/wheel.stl" scale="0.8 0.8 0.8"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh filename="package://explorer_bot/models/world/meshes/wheel.stl" scale="0.8 0.8 0.8"/>
+      </geometry>
+    </collision>
+  </link>
+
+<link name="front_right_wheel">
+    <inertial>
+      <origin
+        xyz="-4.1867E-18 0.0068085 -1.65658661799998E-18"
+        rpy="0 0 0" />
+      <mass
+        value="2.6578" />
+      <inertia
+        ixx="0.00856502765719703"
+        ixy="1.5074118157338E-19"
+        ixz="-4.78150098725052E-19"
+        iyy="0.013670640432096"
+        iyz="-2.68136447099727E-19"
+        izz="0.00856502765719703" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh filename="package://explorer_bot/models/world/meshes/wheel.stl" scale="0.8 0.8 0.8"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh filename="package://explorer_bot/models/world/meshes/wheel.stl" scale="0.8 0.8 0.8"/>
+      </geometry>
+    </collision>
+  </link>
+
+<link name="rear_left_wheel">
+    <inertial>
+      <origin
+        xyz="-4.1867E-18 0.0068085 -1.65658661799998E-18"
+        rpy="0 0 0" />
+      <mass
+        value="2.6578" />
+      <inertia
+        ixx="0.00856502765719703"
+        ixy="1.5074118157338E-19"
+        ixz="-4.78150098725052E-19"
+        iyy="0.013670640432096"
+        iyz="-2.68136447099727E-19"
+        izz="0.00856502765719703" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh filename="package://explorer_bot/models/world/meshes/wheel.stl" scale="0.8 0.8 0.8"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh filename="package://explorer_bot/models/world/meshes/wheel.stl" scale="0.8 0.8 0.8"/>
+      </geometry>
+    </collision>
+  </link>
+
+<link name="rear_right_wheel">
+    <inertial>
+      <origin
+        xyz="-4.1867E-18 0.0068085 -1.65658661799998E-18"
+        rpy="0 0 0" />
+      <mass
+        value="2.6578" />
+      <inertia
+        ixx="0.00856502765719703"
+        ixy="1.5074118157338E-19"
+        ixz="-4.78150098725052E-19"
+        iyy="0.013670640432096"
+        iyz="-2.68136447099727E-19"
+        izz="0.00856502765719703" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh filename="package://explorer_bot/models/world/meshes/wheel.stl" scale="0.8 0.8 0.8"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh filename="package://explorer_bot/models/world/meshes/wheel.stl" scale="0.8 0.8 0.8"/>
+      </geometry>
+    </collision>
+  </link>
+
+
+<joint name="front_left_wheel_joint" type="continuous">
+    <axis xyz="0 1 0"/>
+    <parent link ="base_link"/>
+    <child link ="front_left_wheel"/>
+    <origin rpy ="0 0 0" xyz= "0.176 0.205 0"/>
+  </joint>
+
+
+<joint name="front_right_wheel_joint" type="continuous">
+    <axis xyz="0 1 0"/>
+    <parent link ="base_link"/>
+    <child link ="front_right_wheel"/>
+    <origin rpy ="0 0 0" xyz= "0.176 -0.205 0"/>
+  </joint>
+
+<joint name="rear_left_wheel_joint" type="continuous">
+    <axis xyz="0 1 0"/>
+    <parent link ="base_link"/>
+    <child link ="rear_left_wheel"/>
+    <origin rpy ="0 0 0" xyz= "-0.176 0.205 0"/>
+  </joint>
+
+<joint name="rear_right_wheel_joint" type="continuous">
+    <axis xyz="0 1 0"/>
+    <parent link ="base_link"/>
+    <child link ="rear_right_wheel"/>
+    <origin rpy ="0 0 0" xyz= "-0.176 -0.205 0"/>
+</joint>
+
+
+
+
+
+<!--Front arm-->
+
+<link name="front_arm_bar">
+  <visual>
+      <geometry>
+          <box size="0.1 0.05 0.05"/>
+      </geometry>
+      <material name="gray">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+  </visual>
+
+  <collision>
+    <geometry>
+      <box size="0.05 0.05 0.05"/>
+    </geometry>
+  </collision>
+
+  
+  <xacro:base_inertia m="1" w="0.05" h="0.05" d="0.05"/>
+</link>
+<joint name="front_arm_bar_joint" type="fixed">
+  <axis xyz="0.0 1 0.0"/>
+  <parent link="base_link"/>
+  <child link="front_arm_bar"/>
+  <origin xyz="-0.28 0.001 0.02" rpy="0.0 0.0 0.0"/>
+</joint>
+<!--==========================================================-->
+
+<link name="front_arm_bar_m">
+  <visual>
+      <geometry>
+          <box size="0.004 0.15 0.1"/>
+      </geometry>
+      <material name="gray">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+  </visual>
+
+  <collision>
+    <geometry>
+      <box size="0.004 0.15 0.1"/>
+    </geometry>
+  </collision>
+  <xacro:base_inertia m="0.5" w="0.004" h="0.15" d="0.1"/>
+</link>
+<joint name="front_arm_bar_m_joint" type="fixed">
+  <axis xyz="0.0 0 0.0"/>
+  <parent link="base_link"/>
+  <child link="front_arm_bar_m"/>
+  <origin xyz="-0.33 0.0 -0.005" rpy="0.0 0.0 0.0"/>
+</joint>
+<!--==========================================================-->
+
+<link name="front_arm_bar_s1">
+  <visual>
+      <geometry>
+          <box size="0.004 0.08 0.1"/>
+      </geometry>
+      <material name="gray">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+  </visual>
+
+  <collision>
+    <geometry>
+      <box size="0.004 0.08 0.1"/>
+    </geometry>
+  </collision>
+
+  <xacro:base_inertia m="0.5" w="0.004" h="0.08" d="0.1"/>
+</link>
+<joint name="front_arm_bar_s1_joint" type="fixed">
+  <axis xyz="0.0 0 0.0"/>
+  <parent link="base_link"/>
+  <child link="front_arm_bar_s1"/>
+  <origin xyz="-0.35 0.105 -0.005" rpy="0 0 0.55"/>
+</joint>
+<!--==========================================================-->
+ 
+<link name="front_arm_bar_s2">
+  <visual>
+      <geometry>
+          <box size="0.004 0.08 0.1"/>
+      </geometry>
+      <material name="gray">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+  </visual>
+
+  <collision>
+    <geometry>
+      <box size="0.004 0.08 0.1"/>
+    </geometry>
+  </collision>
+
+  <xacro:base_inertia m="0.5" w="0.004" h="0.08" d="0.1"/>
+</link>
+<joint name="front_arm_bar_s2_joint" type="fixed">
+  <axis xyz="0.0 0 0.0"/>
+  <parent link="base_link"/>
+  <child link="front_arm_bar_s2"/>
+  <origin xyz="-0.35 -0.105 -0.005" rpy="0.0 0.0 -0.55"/>
+</joint>
+<!--==========================================================-->
+
+<link name="front_arm_bar_r1">
+  <visual>
+      <geometry>
+          <box size="0.004 0.08 0.1"/>
+      </geometry>
+      <material name="gray">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+  </visual>
+
+  <collision>
+    <geometry>
+      <box size="0.004 0.08 0.1"/>
+    </geometry>
+  </collision>
+
+  <xacro:base_inertia m="0.5" w="0.004" h="0.08" d="0.1"/>
+</link>
+<joint name="front_arm_bar_r1_joint" type="fixed">
+  <axis xyz="0.0 0 0.0"/>
+  <parent link="base_link"/>
+  <child link="front_arm_bar_r1"/>
+  <origin xyz="-0.41 -0.138 -0.005" rpy="0.0 0.0 1.578"/>
+</joint>
+<!--==========================================================-->
+ 
+<link name="front_arm_bar_r2">
+  <visual>
+      <geometry>
+          <box size="0.004 0.08 0.1"/>
+      </geometry>
+      <material name="gray">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+  </visual>
+
+  <collision>
+    <geometry>
+     <box size="0.004 0.08 0.1"/>
+    </geometry>
+  </collision>
+
+  <xacro:base_inertia m="0.5" w="0.004" h="0.08" d="0.1"/>
+</link>
+<joint name="front_arm_bar_r2_joint" type="fixed">
+  <axis xyz="0.0 0 0.0"/>
+  <parent link="base_link"/>
+  <child link="front_arm_bar_r2"/>
+  <origin xyz="-0.41 0.138 -0.005" rpy="0.0 0.0 -1.578"/>
+</joint>
+<!--==========================================================-->
+
+<!-- laser -->
+<link name="laser">
+  <xacro:cylinder_inertia m="5" r="0.025" h="0.025"/>
+
+  <visual>
+    <geometry>
+      <cylinder radius="0.025" length="0.025"/> 
+     </geometry>
+  </visual>
+
+  <collision>
+    <origin/>
+    <geometry>
+      <cylinder radius="0.025" length="0.025"/> 
+    </geometry>
+  </collision>
+</link>
+ 
+<joint name="laser_joint" type="fixed">
+  <origin xyz="-0.3 0.0 0.06" rpy="0.0 0.0 3.14"/>
+  <axis xyz="0 0 1" />
+  <parent link="base_link"/>
+  <child link="laser"/>
+</joint>
+
+<gazebo reference="laser">
+  <sensor type="ray" name="laser">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>40</update_rate>
+      <ray>
+          <scan>
+              <horizontal>
+                  <samples>1440</samples>
+                  <resolution>0.5</resolution>
+                  <min_angle>-1.578</min_angle>
+                  <max_angle>1.578</max_angle>
+              </horizontal>
+          </scan>
+          <range>
+            <min>0.10</min>
+            <max>3.0</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+          </noise>
+      </ray>
+      <plugin name="laser_controller" filename="libgazebo_ros_laser.so">
+        
+          <topicName>/scan</topicName>
+          <frameName>laser</frameName>
+      </plugin>
+  </sensor>
+</gazebo>
+
+<!--######################################################################-->
+<gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      
+    </plugin>
+  </gazebo>
+<!--######################################################################-->
+<gazebo>
+  <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+    <jointName>arm_joint,hand_joint</jointName>
+  </plugin>
+</gazebo>
+
+<gazebo>
+  <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
+    <legacyMode>false</legacyMode>
+    <alwaysOn>true</alwaysOn>
+    <updateRate>1000.0</updateRate>
+    <leftJoint>front_left_wheel_joint, rear_left_wheel_joint</leftJoint>
+    <rightJoint>front_right_wheel_joint, rear_right_wheel_joint</rightJoint>
+    <wheelSeparation>0.41</wheelSeparation>
+    <wheelDiameter>0.18</wheelDiameter>
+    <wheelTorque>5</wheelTorque>
+    <publishTf>1</publishTf>
+    <odometryFrame>map</odometryFrame>
+    <commandTopic>cmd_vel</commandTopic>
+    <odometryTopic>odom</odometryTopic>
+    <robotBaseFrame>base_link</robotBaseFrame>
+    <wheelAcceleration>2.8</wheelAcceleration>
+    <publishWheelJointState>true</publishWheelJointState>
+    <publishWheelTF>false</publishWheelTF>
+    <odometrySource>world</odometrySource>
+    <rosDebugLevel>Debug</rosDebugLevel>
+  </plugin>
+</gazebo>
+<!--##########################-->
+<gazebo reference="front_left_wheel">
+ <mu2 value="1.0"/>
+ <kp value="10000000.0" />
+ <kd value="1.0" />
+ <fdir1 value="1 0 0"/>
+</gazebo>
+
+<gazebo reference="front_right_wheel">
+ <mu1 value="1.0"/>
+ <mu2 value="1.0"/>
+ <kp value="10000000.0" />
+ <kd value="1.0" />
+ <fdir1 value="1 0 0"/>
+</gazebo>
+
+<gazebo reference="rear_left_wheel">
+ <mu1 value="1.0"/>
+ <mu2 value="1.0"/>
+ <kp value="10000000.0" />
+ <kd value="1.0" />
+ <fdir1 value="1 0 0"/>
+</gazebo>
+
+<gazebo reference="rear_left_wheel">
+ <mu1 value="1.0"/>
+ <mu2 value="1.0"/>
+ <kp value="10000000.0" />
+ <kd value="1.0" />
+ <fdir1 value="1 0 0"/>
+</gazebo>
+<!--######################################################################-->
+<transmission name="front_left_wheel_trans" type="SimpleTransmission">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="front_left_wheel_motor">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+   <mechanicalReduction>5</mechanicalReduction>
+  </actuator>
+  <joint name="front_left_wheel_joint">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
+<transmission name="front_right_wheel_trans" type="SimpleTransmission">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="front_right_wheel_motor">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+   <mechanicalReduction>5</mechanicalReduction>
+  </actuator>
+  <joint name="front_right_wheel_joint">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
+<transmission name="rear_left_wheel_trans" type="SimpleTransmission">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="rear_left_wheel_motor">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+   <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="rear_left_wheel_joint">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
+<transmission name="rear_right_wheel_trans" type="SimpleTransmission">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="rear_right_wheel_motor">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+   <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="rear_right_wheel_joint">
+   <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+<!--#######################- ARM_Hand -###############################################-->
+
+<transmission name="arm_base_trans" type="SimpleTransmission">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="arm_motor">
+   <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+   <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_joint">
+   <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+<transmission name="hand_base_trans" type="SimpleTransmission">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="hand_motor">
+   <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+   <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="hand_joint">
+   <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
+</robot>
