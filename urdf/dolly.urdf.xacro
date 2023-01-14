@@ -2,6 +2,8 @@
 
 <robot xmlns:xacro = "http://www.ros.org/wiki/xacro" name="dolly">
 
+
+<!--################## Inertia Generalized Function #######################-->
   <xacro:macro name="base_inertia" params="m w h d">
     <inertial>
       <mass value="${m}"/>
@@ -20,6 +22,8 @@
       <inertia ixx="${2.0*m*(r*r)/5.0}" ixy = "0" ixz = "0" iyy="${2.0*m*(r*r)/5.0}" iyz = "0" izz="${2.0*m*(r*r)/5.0}"/> 
     </inertial>
   </xacro:macro>
+
+<!--################## Body of Bot #####################################-->
 
 <link name="base_link">
     <inertial>
@@ -60,6 +64,7 @@
     </collision>
 </link>
 
+<!--################## Arm_ link #####################################-->
 <link name="arm_link">
   <visual>
     <origin rpy="0 0 0" xyz="0 0 0.1585"/>
@@ -91,6 +96,7 @@
   <axis xyz="0 1 0"/>
 </joint>
 
+<!--################## End of arm / Hand #####################################-->
 <link name="hand">
   <inertial>
     
@@ -136,6 +142,7 @@
   <origin rpy="0 1.578 3.14" xyz="0.05 0.27 0.2"/>
 </joint>
 
+<!--################## Wheels of Bot #####################################-->
 <link name="front_left_wheel">
     <inertial>
       <origin
@@ -319,10 +326,7 @@
 </joint>
 
 
-
-
-
-<!--Front arm-->
+<!--##################  Front arm ############################-->
 
 <link name="front_arm_bar">
   <visual>
@@ -480,7 +484,7 @@
 </joint>
 <!--==========================================================-->
 
-<!-- laser -->
+<!--###################  laser-Block with Laser reference ###############-->
 <link name="laser">
   <xacro:cylinder_inertia m="5" r="0.025" h="0.025"/>
 
@@ -538,19 +542,21 @@
   </sensor>
 </gazebo>
 
-<!--######################################################################-->
+<!--#####################   gazebo_ros_control  ########################-->
 <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       
     </plugin>
-  </gazebo>
-<!--######################################################################-->
+</gazebo>
+
+<!--############# Joint_state_publisher ################################-->
 <gazebo>
   <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
     <jointName>arm_joint,hand_joint</jointName>
   </plugin>
 </gazebo>
 
+<!--################ diff_drive_controller  ################################-->
 <gazebo>
   <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
     <legacyMode>false</legacyMode>
@@ -573,6 +579,7 @@
     <rosDebugLevel>Debug</rosDebugLevel>
   </plugin>
 </gazebo>
+
 <!--##########################-->
 <gazebo reference="front_left_wheel">
  <mu2 value="1.0"/>
@@ -604,7 +611,7 @@
  <kd value="1.0" />
  <fdir1 value="1 0 0"/>
 </gazebo>
-<!--######################################################################-->
+<!--############### Wheel- Transmission ###############################-->
 <transmission name="front_left_wheel_trans" type="SimpleTransmission">
   <type>transmission_interface/SimpleTransmission</type>
   <actuator name="front_left_wheel_motor">
