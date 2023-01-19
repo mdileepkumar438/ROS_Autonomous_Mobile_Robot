@@ -110,4 +110,14 @@ Then a 3D model of an assessment world (Turlte world) was brought in, from which
 
 As you can see here [Assessment_map](https://github.com/mdileepkumar438/ROS_Autonomous_Mobile_Robot/blob/main/config/Assesment_world.pgm)
 
+
+* ``` rqt_graph``` 
+
+<img width="1418" alt="Screenshot 2022-10-14 at 5 03 35 PM" src="https://user-images.githubusercontent.com/102908088/213450194-189633ef-7e89-4ccd-ab08-3589039dbac6.png">
+
+
+
+
 - Autonomous Navigation using Gazebo Model. The robot needs to perform Autonomous driving using Navigation and Path Planning algorithms is still in Testing.
+
+
