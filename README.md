@@ -3,11 +3,21 @@
 <details open="open">
   <summary>Contents</summary>
   <ol>
+    <li><a href="#Simulation-&-Voice-over-explaination">Simulation & Voice over explaination</a></li>
     <li><a href="#In-this-Repository">In This Repository</a></li>
     <li><a href="#How-to-use-this-Repository">How to use this Repository</a></li>
     <li><a href="#Workflow-of-Project">Workflow of Project</a></li>
+    
+    
   </ol>
 </details>
+
+#
+## Simulation & Voice over explaination
+
+### Click this link for Video [Mobile_robotics_CW-2_video](https://www.youtube.com/watch?v=PeGXHOaHw5w)
+
+#
 
 ## In this Repository
 The robot has a URDF file with all of the essential parameters defined to load into Gazebo in the simulation and be able to move and interact with objects in the simulation to complete the goal or prove that it is possible to achieve it.
